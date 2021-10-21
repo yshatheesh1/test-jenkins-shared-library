@@ -7,6 +7,7 @@ def call(body) {
         stage('test') {
             echo config.buildType.toLowerCase()
             echo config.version.toLowerCase()
+            echo config.buildType.toLowerCase()
             switch (config.buildType.toLowerCase()) {
                 case 'flutter':
                     echo 'flutter'
