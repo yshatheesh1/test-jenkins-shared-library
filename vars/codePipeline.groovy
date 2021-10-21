@@ -5,8 +5,8 @@ def call(body) {
     body()
     node {
         stage('test') {
-    echo config.buildType.toLowerCase();
-    echo config.version.toLowerCase()
+            echo config.buildType.toLowerCase()
+            echo config.version.toLowerCase()
             switch (config.buildType.toLowerCase()) {
                 case 'flutter':
                     echo 'flutter'
