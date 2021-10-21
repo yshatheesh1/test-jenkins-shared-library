@@ -4,10 +4,10 @@ def call(body) {
     body.delegate = config
     body()
     node {
+        stage('checkout') {
+            gitCheckout(config)
+        }
         stage('test') {
-            echo config.buildType.toLowerCase()
-            echo config.version.toLowerCase()
-            echo config.buildType.toLowerCase()
             switch (config.buildType.toLowerCase()) {
                 case 'flutter':
                     echo 'flutter'
