@@ -3,10 +3,10 @@ def call(body) {
     body.resolveStrategy = Closure.DELEGATE_FIRST
     body.delegate = config
     body()
-    echo config.buildType.toLowerCase();
-    echo config.version.toLowerCase()
     node {
         stage('test') {
+    echo config.buildType.toLowerCase();
+    echo config.version.toLowerCase()
             switch (config.buildType.toLowerCase()) {
                 case 'flutter':
                     echo 'flutter'
