@@ -1,3 +1,23 @@
 def call(body) {
-    echo 'hello wrold testing the changes'
+    def config = [:]
+    body.resolveStrategy = Closure.DELEGATE_FIRST
+    body.delegate = config
+    body()
+    switch (pipelineParams.buildType.toLowerCase()) {
+        case 'flutter':
+            echo 'flutter'
+            break
+        case 'dotnetcore' :
+            echo 'dotnetcore'
+            break
+        case 'java':
+            echo 'java'
+            break
+        case 'angular':
+            echo 'angular'
+            break
+        case 'infrastructure':
+            echo 'infrastructure'
+            break
+    }
 }
