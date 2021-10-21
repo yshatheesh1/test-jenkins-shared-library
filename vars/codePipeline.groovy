@@ -3,6 +3,8 @@ def call(body) {
     body.resolveStrategy = Closure.DELEGATE_FIRST
     body.delegate = config
     body()
+    echo config.buildType.toLowerCase();
+    echo config.version.toLowerCase()
     node {
         stage('test') {
             switch (config.buildType.toLowerCase()) {
