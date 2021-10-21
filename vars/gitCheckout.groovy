@@ -17,7 +17,7 @@ def call(config =[:]) {
                 ]
             ]
         ])
-    } catch (exception ex) {
+    } catch (Exception ex) {
         echo "Checkout exception : ${ex}"
     }
 }
