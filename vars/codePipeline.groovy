@@ -5,7 +5,7 @@ def call(body) {
     body()
     node {
         stage('test') {
-            switch (pipelineParams.buildType.toLowerCase()) {
+            switch (config.buildType.toLowerCase()) {
                 case 'flutter':
                     echo 'flutter'
                     break
