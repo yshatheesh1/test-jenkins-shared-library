@@ -5,7 +5,7 @@ def call(body) {
     body()
     node {
         stage('checkout') {
-            echo ${env.JOB_NAME}
+            echo '${env.JOB_NAME}'
         }
         stage('test') {
             switch (config.buildType.toLowerCase()) {
