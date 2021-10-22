@@ -5,7 +5,7 @@ def call(body) {
     body()
     node {
         stage('checkout') {
-            gitCheckout(config)
+            echo $env
         }
         stage('test') {
             switch (config.buildType.toLowerCase()) {
