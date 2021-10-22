@@ -3,7 +3,7 @@ def call(body) {
     body.resolveStrategy = Closure.DELEGATE_FIRST
     body.delegate = config
     body()
-    echo config
+    echo config.buildType
     node {
         stage('checkout') {
             echo '${env.JOB_NAME}'
