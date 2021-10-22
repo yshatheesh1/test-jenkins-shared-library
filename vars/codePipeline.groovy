@@ -1,9 +1,9 @@
 def call(body) {
-    echo body
     def config = [:]
     body.resolveStrategy = Closure.DELEGATE_FIRST
     body.delegate = config
     body()
+    echo config
     node {
         stage('checkout') {
             echo '${env.JOB_NAME}'
