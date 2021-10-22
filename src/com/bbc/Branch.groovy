@@ -1,7 +1,10 @@
-package com.bbc.jenkins
+package com.bbc
 
 import groovy.transform.CompileStatic
 
+/**
+ * Helper class for branches
+ */
 @CompileStatic
 class Branch implements Serializable {
 
