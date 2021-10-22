@@ -1,4 +1,5 @@
 def call(body) {
+    echo body
     def config = [:]
     body.resolveStrategy = Closure.DELEGATE_FIRST
     body.delegate = config
