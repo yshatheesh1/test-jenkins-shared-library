@@ -1,4 +1,4 @@
-package com.bbc
+package com.bbc.core
 
 import groovy.transform.CompileStatic
 
@@ -13,19 +13,22 @@ class Branch implements Serializable {
     String name
 
     Branch(String name) {
-     this.name = Objects.requireNonNull(name)
+        this.name = Objects.requireNonNull(name)
     }
 
     boolean isMaster() {
-       return name == 'master'
+        return name == 'master'
     }
 
     boolean isDevelopment() {
-        return name == 'development'
+        return name == 'develop'
     }
 
     boolean isFeature() {
-        return name == 'feature'
+        return name.matches("^feature.*\$")
     }
 
+    boolean isBugFix() {
+        return name.matches("^bugfix.*\$")
+    }
 }
