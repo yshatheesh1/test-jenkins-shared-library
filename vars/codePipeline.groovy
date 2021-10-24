@@ -27,8 +27,10 @@ def call(body) {
     stepExecutor.echo(config.credentialId as String)
     node {
         stage('checkout') {
-            def js4 = new JsonBuilder(scm)
-            println js4.toString()
+            stepExecutor.echo(scm.$class as String)
+            stepExecutor.echo(scm.credentialId as String)
+            stepExecutor.echo(scm.branches as String)
+            stepExecutor.echo(scm.userRemoteConfigs[0] as String)
             Checkout checkoutHandler = new Checkout(stepExecutor);
             checkoutHandler.gitCheckout(scm.$class, scm.userRemoteConfigs[0].url, scm.credentialId, scm.branches);
         }
