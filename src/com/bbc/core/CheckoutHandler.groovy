@@ -3,8 +3,8 @@ package com.bbc.core
 class CheckoutHandler {
     def checkout;
 
-    CheckoutHandler(checkout) {
-        this.checkout = checkout;
+    CheckoutHandler(steps) {
+        this.checkout = steps.checkout;
     }
 
     void gitCheckout(String url, String credentialId, String[] branchNames) {

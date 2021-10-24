@@ -19,7 +19,7 @@ def call(body) {
     body.delegate = config
     body()
     echo config.buildType
-    echo config.buildVersion
+    echo config.version
     echo config.credentialId
     node {
         stage('checkout') {
