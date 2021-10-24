@@ -27,13 +27,6 @@ def call(body) {
     stepExecutor.echo(config.credentialId as String)
     node {
         stage('checkout') {
-            scm.userRemoteConfigs.each {
-                stepExecutor.echo(it.credentialsId as String)
-                stepExecutor.echo(it.url as String)
-            }
-            stepExecutor.echo(scm.userRemoteConfigs[0].credentialsId as String)
-            stepExecutor.echo(scm.branches as String)
-            stepExecutor.echo(scm.userRemoteConfigs[0].url as String)
             Checkout checkoutHandler = new Checkout(stepExecutor);
             checkoutHandler.gitCheckout("GitSCM", scm.userRemoteConfigs[0].url, scm.userRemoteConfigs[0].credentialsId, scm.branches);
         }

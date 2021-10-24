@@ -1,11 +1,8 @@
 package com.bbc.core
 
-import groovy.transform.CompileStatic
-
 /**
  * Helper class for branches
  */
-@CompileStatic
 class Branch implements Serializable {
 
     private static final long serialVersionUID = 1L
