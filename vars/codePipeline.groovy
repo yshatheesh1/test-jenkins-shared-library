@@ -27,7 +27,7 @@ def call(body) {
     node {
         stage('checkout') {
             CheckoutHandler checkoutHandler = new CheckoutHandler(stepExecutor);
-            checkoutHandler.gitCheckout(scm.userRemoteConfigs[0].url, config.credentialId, scm.Branches);
+            checkoutHandler.gitCheckout(scm.userRemoteConfigs[0].url, config.credentialId, scm.branches);
         }
     }
 }
