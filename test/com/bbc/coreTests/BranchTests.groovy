@@ -1,10 +1,10 @@
-package com.bbc.core
+package com.bbc.coreTests
 
-import com.lesfurets.jenkins.unit.BasePipelineTest
+import com.bbc.core.Branch
 import org.junit.Assert
 import org.junit.Test
 
-class BranchTests extends BasePipelineTest {
+class BranchTests {
 
     @Test
     void testBranchNames() {

@@ -1,4 +1,4 @@
-package com.bbc.steps
+package com.bbc.step
 
 interface IStepExecutor {
     int sh(String command)

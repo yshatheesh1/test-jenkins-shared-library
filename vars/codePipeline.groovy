@@ -1,6 +1,7 @@
-import com.bbc.core.CheckoutHandler
-import com.bbc.steps.DefaultStepExecutor
-import com.bbc.steps.IStepExecutor
+import com.bbc.core.Checkout
+import com.bbc.step.DefaultStepExecutor
+import com.bbc.step.IStepExecutor
+import groovy.json.JsonBuilder
 
 /*
  * codePipeline {
@@ -26,8 +27,10 @@ def call(body) {
     stepExecutor.echo(config.credentialId as String)
     node {
         stage('checkout') {
-            CheckoutHandler checkoutHandler = new CheckoutHandler(stepExecutor);
-            checkoutHandler.gitCheckout(scm.userRemoteConfigs[0].url, config.credentialId, scm.branches);
+            def js4 = new JsonBuilder(scm)
+            println js4.toString()
+            Checkout checkoutHandler = new Checkout(stepExecutor);
+            checkoutHandler.gitCheckout(scm.$class, scm.userRemoteConfigs[0].url, scm.credentialId, scm.branches);
         }
     }
 }

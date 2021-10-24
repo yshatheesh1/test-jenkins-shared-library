@@ -1,8 +1,8 @@
-package com.bbc.steps
+package com.bbc.step
 
 class DefaultStepExecutor implements IStepExecutor {
 
-    private _steps
+    private def _steps
 
     DefaultStepExecutor(steps) {
         this._steps = steps
