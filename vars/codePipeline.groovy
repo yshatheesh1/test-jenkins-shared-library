@@ -1,4 +1,6 @@
 import com.bbc.core.CheckoutHandler
+import com.bbc.steps.DefaultStepExecutor
+import com.bbc.steps.IStepExecutor
 
 /*
  * codePipeline {
@@ -18,12 +20,13 @@ def call(body) {
     body.resolveStrategy = Closure.DELEGATE_FIRST
     body.delegate = config
     body()
-    echo config.buildType
-    echo config.version
-    echo config.credentialId
+    IStepExecutor stepExecutor = new DefaultStepExecutor(this);
+    stepExecutor.echo(config.buildType as String)
+    stepExecutor.echo(config.version as String)
+    stepExecutor.echo(config.credentialId as String)
     node {
         stage('checkout') {
-            CheckoutHandler checkoutHandler = new CheckoutHandler(this);
+            CheckoutHandler checkoutHandler = new CheckoutHandler(stepExecutor);
             checkoutHandler.gitCheckout(scm.userRemoteConfigs[0].url, config.credentialId, scm.Branches);
         }
     }

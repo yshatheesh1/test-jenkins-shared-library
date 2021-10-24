@@ -1,15 +1,18 @@
 package com.bbc.core
 
-class CheckoutHandler {
-    def checkout;
+import com.bbc.steps.IStepExecutor
 
-    CheckoutHandler(steps) {
-        this.checkout = steps.checkout;
+class CheckoutHandler {
+
+    private IStepExecutor _stepExecutor;
+
+    CheckoutHandler(IStepExecutor stepExecutor) {
+        this._stepExecutor = stepExecutor;
     }
 
     void gitCheckout(String url, String credentialId, String[] branchNames) {
         def scmBranches = branchNames.collect { [name: it] }
-        checkout([
+        this._stepExecutor.checkout([
                 $class           : 'GitSCM',
                 branches         : scmBranches,
                 userRemoteConfigs: [
