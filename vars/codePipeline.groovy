@@ -23,7 +23,7 @@ def call(body) {
     echo config.credentialId
     node {
         stage('checkout') {
-            CheckoutHandler checkoutHandler = new CheckoutHandler(checkout);
+            CheckoutHandler checkoutHandler = new CheckoutHandler(this);
             checkoutHandler.gitCheckout(scm.userRemoteConfigs[0].url, config.credentialId, scm.Branches);
         }
     }
