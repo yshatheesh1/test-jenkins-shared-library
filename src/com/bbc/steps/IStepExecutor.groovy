@@ -8,4 +8,5 @@ interface IStepExecutor {
     void checkout(Map parameters)
 
     void echo(String message)
+
 }
