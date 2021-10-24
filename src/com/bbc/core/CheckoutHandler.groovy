@@ -10,8 +10,8 @@ class CheckoutHandler {
         this._stepExecutor = stepExecutor;
     }
 
-    void gitCheckout(String url, String credentialId, String[] branchNames) {
-        def scmBranches = branchNames.collect { [name: it] }
+    void gitCheckout(String url, String credentialId, List scmBranches) {
+        // def scmBranches = branchNames.collect { [name: it] }
         this._stepExecutor.checkout([
                 $class           : 'GitSCM',
                 branches         : scmBranches,
