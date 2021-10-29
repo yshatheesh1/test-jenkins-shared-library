@@ -1,49 +1,75 @@
 package com.bbc.coreTests
 
-import com.bbc.core.Checkout
+import com.bbc.core.CheckoutHandler
+import com.bbc.exception.ValidationException
+import com.bbc.model.Checkout
 import com.bbc.step.IStepExecutor
-import groovy.mock.interceptor.MockFor
+import static org.mockito.Mockito.*;
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 
 class CheckoutTests {
 
-    @Test
-    void testCheckout() {
-        // arrange
-        String $class = "git";
-        String url = "url"
-        String credentialId = "credentialId"
-        List branches = Collections.singletonList({ name: "test_branch" })
-        MockFor stepExecutorMockFor = new MockFor(IStepExecutor)
-        stepExecutorMockFor.demand.with {
-            checkout { Map parameters ->
-                Assert.assertEquals(parameters.userRemoteConfigs[0].url, url)
-                Assert.assertEquals(parameters.userRemoteConfigs[0].credentialsId, credentialId)
-                Assert.assertEquals(parameters.branches, branches)
-            }
-            echo { String message -> Assert.assertEquals(message, "Check-out complete...") }
-        }
-        IStepExecutor stepExecutor = stepExecutorMockFor.proxyDelegateInstance()
-        // act
-        new Checkout(stepExecutor).gitCheckout($class, url, credentialId, branches)
-        // assert
-        stepExecutorMockFor.verify(stepExecutor)
+    private IStepExecutor stepExecutor;
+
+    @Before
+    void before() {
+        stepExecutor = mock(IStepExecutor);
     }
 
     @Test
-    void testCheckout_HandleException() {
-        // arrange
-        MockFor stepExecutorMockFor = new MockFor(IStepExecutor)
-        stepExecutorMockFor.demand.with {
-            checkout { Map parameters -> throw new Exception('git exception') }
-            echo { String message -> Assert.assertTrue(message.contains('git exception')) }
-        }
-        IStepExecutor stepExecutor = stepExecutorMockFor.proxyDelegateInstance()
+    void testCheckout_ThrowValidationCheckoutConfig() {
         // act
-        new Checkout(stepExecutor).gitCheckout("test", "url", "credential", null)
-        // assert
-        stepExecutorMockFor.verify(stepExecutor)
+        def exception = Assert.assertThrows(ValidationException, () ->
+                new CheckoutHandler(stepExecutor, null).gitCheckout())
+        Assert.assertEquals('Checkout Config is Required.', exception.message)
     }
+
+    @Test
+    void testCheckout_ThrowValidationVersionClass() {
+        // act
+        def exception = Assert.assertThrows(ValidationException, () ->
+                new CheckoutHandler(stepExecutor, new Checkout()).gitCheckout())
+        Assert.assertEquals('versionClass is Required.', exception.message)
+    }
+
+    @Test
+    void testCheckout_ThrowValidationBranchName() {
+        // act
+        def exception = Assert.assertThrows(ValidationException, () ->
+                new CheckoutHandler(stepExecutor,
+                        new Checkout(
+                                versionClass: 'test'
+                        )
+                ).gitCheckout())
+        Assert.assertEquals('branchName is Required.', exception.message)
+    }
+
+    @Test
+    void testCheckout_ThrowValidationUrl() {
+        // act
+        def exception = Assert.assertThrows(ValidationException, () ->
+                new CheckoutHandler(stepExecutor,
+                        new Checkout(
+                                versionClass: 'test',
+                                branchName: 'branchName'
+                        )
+                ).gitCheckout())
+        Assert.assertEquals('url is Required.', exception.message)
+    }
+
+    @Test
+    void testCheckout() {
+        // arrange
+        Checkout checkout = new Checkout(versionClass: 'test',
+                branchName: 'testBranch', url: 'testUrl');
+        doNothing().when(stepExecutor).echo(anyString())
+        doNothing().when(stepExecutor).checkout(anyMap())
+        // act
+        new CheckoutHandler(stepExecutor, checkout).gitCheckout()
+        // assert
+        verify(stepExecutor, times(1)).checkout(any());
+    }
+
 }

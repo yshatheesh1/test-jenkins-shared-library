@@ -1,13 +1,12 @@
-import com.bbc.core.Checkout
+import com.bbc.core.CheckoutHandler
 import com.bbc.step.DefaultStepExecutor
 import com.bbc.step.IStepExecutor
-import groovy.json.JsonBuilder
 
 /*
  * codePipeline {
- *      restore: ''
  *      buildType: 'dotNetCore'
  *      buildVersion: '3.1.0'
+ *      image: 'dotnet:3.1.0'
  *      build: 'dotnet build --configuration release'
  *      test: 'dotnet test'
  *      integrationTest: 'dotnet test --integrationTest'
@@ -21,14 +20,12 @@ def call(body) {
     body.resolveStrategy = Closure.DELEGATE_FIRST
     body.delegate = config
     body()
-    IStepExecutor stepExecutor = new DefaultStepExecutor(this);
-    stepExecutor.echo(config.buildType as String)
-    stepExecutor.echo(config.version as String)
-    stepExecutor.echo(config.credentialId as String)
     node {
+        agent {
+            docker { image config.image }
+        }
         stage('checkout') {
-            Checkout checkoutHandler = new Checkout(stepExecutor);
-            checkoutHandler.gitCheckout("GitSCM", scm.userRemoteConfigs[0].url, scm.userRemoteConfigs[0].credentialsId, scm.branches);
+            gitCheckout
         }
     }
 }

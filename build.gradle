@@ -23,6 +23,7 @@ dependencies {
     implementation 'org.codehaus.groovy:groovy-all:3.0.5'
     // implementation 'org.jenkins-ci.plugins:git:2.5.2@jar'
     testCompile group: 'junit', name: 'junit', version: '4.12'
+    testImplementation "org.mockito:mockito-core:3.+"
 }
 
 sourceSets {

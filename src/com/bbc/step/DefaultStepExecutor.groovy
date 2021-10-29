@@ -1,7 +1,5 @@
 package com.bbc.step
 
-import hudson.plugins.git.*
-
 class DefaultStepExecutor implements IStepExecutor {
 
     private def _steps
