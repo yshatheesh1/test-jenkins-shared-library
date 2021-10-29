@@ -24,7 +24,7 @@ def call(body) {
     //  dockerNode(config.image) {
     node {
         stage('checkout') {
-            gitCheckout
+            gitCheckout()
         }
         stage('build and test') {
             IStepExecutor stepExecutor = new DefaultStepExecutor(this);
