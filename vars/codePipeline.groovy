@@ -23,6 +23,7 @@ def call(body) {
     // get builder based on build
     //  dockerNode(config.image) {
     node {
+        agent any
         stages {
             stage('checkout') {
                 gitCheckout
