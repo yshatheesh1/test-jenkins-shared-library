@@ -20,8 +20,7 @@ def call(body) {
     body.resolveStrategy = Closure.DELEGATE_FIRST
     body.delegate = config
     body()
-    node {
-        docker { image config.image }
+    dockerNode(config.image) {
         stage('checkout') {
             gitCheckout
         }
