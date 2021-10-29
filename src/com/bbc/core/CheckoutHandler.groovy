@@ -16,7 +16,7 @@ class CheckoutHandler {
     }
 
     void gitCheckout() {
-        stepExecutor.echo("Started Check-out...")
+        stepExecutor.echo("Started Check-out")
         if (!checkout) {
             throw new ValidationException("Checkout Config is Required.")
         }
@@ -38,13 +38,13 @@ class CheckoutHandler {
         if (checkout?.timeout) {
             extensions.add([$class: 'CheckoutOption', timeout: checkout?.timeout])
         }
-        stepExecutor.echo("Validating parameters for git checkout")
+        stepExecutor.echo("Validated parameters for git checkout")
         stepExecutor.checkout([
                 $class           : checkout.versionClass,
                 branches         : scmBranches,
                 userRemoteConfigs: userRemoteConfigs,
                 extensions       : extensions
         ])
-        stepExecutor.echo("Check-out completed...")
+        stepExecutor.echo("Check-out completed")
     }
 }

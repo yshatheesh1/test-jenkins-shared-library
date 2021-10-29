@@ -23,7 +23,7 @@ def call(body) {
     // get builder based on build
     //  dockerNode(config.image) {
     IStepExecutor stepExecutor = new DefaultStepExecutor(this);
-    stepExecutor.node('any', {
+    stepExecutor.node('master', {
         stage('checkout') {
             gitCheckout()
         }
