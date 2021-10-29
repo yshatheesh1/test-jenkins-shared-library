@@ -20,17 +20,19 @@ def call(body) {
     body.resolveStrategy = Closure.DELEGATE_FIRST
     body.delegate = config
     body()
-    IStepExecutor stepExecutor = new DefaultStepExecutor(this);
     // get builder based on build
     //  dockerNode(config.image) {
     stage('checkout') {
         gitCheckout
     }
-    stage('build') {
-        stepExecutor.sh(config.build)
-    }
-
-    stage('test') {
-        stepExecutor.sh(config.test)
+    stage('build and test') {
+        step {
+            IStepExecutor stepExecutor = new DefaultStepExecutor(this);
+            stepExecutor.sh(config.build)
+        }
+        step {
+            IStepExecutor stepExecutor = new DefaultStepExecutor(this);
+            stepExecutor.sh(config.test)
+        }
     }
 }
