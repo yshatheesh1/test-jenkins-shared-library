@@ -22,18 +22,15 @@ def call(body) {
     body()
     IStepExecutor stepExecutor = new DefaultStepExecutor(this);
     // get builder based on build
-    timeoutWithMsg(time: 15, unit: 'MINUTES', action: 'build') {
-        //  dockerNode(config.image) {
-        stage('checkout') {
-            gitCheckout
-        }
-        stage('build') {
-            stepExecutor.sh(config.build)
-        }
+    //  dockerNode(config.image) {
+    stage('checkout') {
+        gitCheckout
+    }
+    stage('build') {
+        stepExecutor.sh(config.build)
+    }
 
-        stage('test') {
-            stepExecutor.sh(config.test)
-        }
-
+    stage('test') {
+        stepExecutor.sh(config.test)
     }
 }
