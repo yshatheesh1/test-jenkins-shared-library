@@ -10,4 +10,6 @@ interface IStepExecutor {
     void echo(String message)
 
     void node(String label, Closure body)
+
+    void stage(String label, Closure body)
 }

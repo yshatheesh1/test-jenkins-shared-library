@@ -24,12 +24,14 @@ def call(body) {
     //  dockerNode(config.image) {
     IStepExecutor stepExecutor = new DefaultStepExecutor(this);
     stepExecutor.node('master', {
-        stage('checkout') {
-            gitCheckout()
-        }
-        stage('build and test') {
+        stepExecutor.stage('checkout', {
+            new gitCheckout()
+        })
+        stepExecutor.stage('build', {
             stepExecutor.sh(config.build)
+        })
+        stepExecutor.stage('test', {
             stepExecutor.sh(config.test)
-        }
+        })
     })
 }

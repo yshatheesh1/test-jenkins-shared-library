@@ -32,4 +32,9 @@ class DefaultStepExecutor implements IStepExecutor {
     void node(String label, Closure body) {
         this.steps.node(label, body)
     }
+
+    @Override
+    void stage(String label, Closure body) {
+        this.steps.stage(label, body)
+    }
 }
