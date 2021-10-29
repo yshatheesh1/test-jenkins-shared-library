@@ -10,7 +10,6 @@ def call() {
             url: scm.userRemoteConfigs[0].url,
             credentialId:  scm.userRemoteConfigs[0].credentialsId,
             branchName: scm.branches[0].name
-
     )
     new CheckoutHandler(stepExecutor, checkout).gitCheckout();
 }
