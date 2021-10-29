@@ -23,22 +23,13 @@ def call(body) {
     // get builder based on build
     //  dockerNode(config.image) {
     node {
-        agent any
-        stages {
-            stage('checkout') {
-                gitCheckout
-            }
-            stage('build and test') {
-                steps {
-                    IStepExecutor stepExecutor = new DefaultStepExecutor(this);
-                    stepExecutor.sh(config.build)
-                }
-                steps {
-                    IStepExecutor stepExecutor = new DefaultStepExecutor(this);
-                    stepExecutor.sh(config.test)
-                }
-            }
+        stage('checkout') {
+            gitCheckout
         }
-
+        stage('build and test') {
+            IStepExecutor stepExecutor = new DefaultStepExecutor(this);
+            stepExecutor.sh(config.build)
+            stepExecutor.sh(config.test)
+        }
     }
 }
