@@ -27,11 +27,11 @@ def call(body) {
             gitCheckout
         }
         stage('build and test') {
-            step {
+            steps {
                 IStepExecutor stepExecutor = new DefaultStepExecutor(this);
                 stepExecutor.sh(config.build)
             }
-            step {
+            steps {
                 IStepExecutor stepExecutor = new DefaultStepExecutor(this);
                 stepExecutor.sh(config.test)
             }
