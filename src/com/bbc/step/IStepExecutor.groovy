@@ -8,4 +8,6 @@ interface IStepExecutor {
     void checkout(Map parameters)
 
     void echo(String message)
+
+    void node(String label, Closure body)
 }

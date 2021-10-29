@@ -22,14 +22,14 @@ def call(body) {
     body()
     // get builder based on build
     //  dockerNode(config.image) {
-    node {
+    IStepExecutor stepExecutor = new DefaultStepExecutor(this);
+    stepExecutor.node('any', {
         stage('checkout') {
             gitCheckout()
         }
         stage('build and test') {
-            IStepExecutor stepExecutor = new DefaultStepExecutor(this);
             stepExecutor.sh(config.build)
             stepExecutor.sh(config.test)
         }
-    }
+    })
 }
