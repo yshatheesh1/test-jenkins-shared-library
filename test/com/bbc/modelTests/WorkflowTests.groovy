@@ -1,6 +1,6 @@
 package com.bbc.modelTests
 
-import com.bbc.model.Job
+
 import com.bbc.model.PipelineConfig
 
 class WorkflowTests {

@@ -21,9 +21,7 @@ def call(body) {
     body.delegate = config
     body()
     node {
-        agent {
-            docker { image config.image }
-        }
+        docker { image config.image }
         stage('checkout') {
             gitCheckout
         }
