@@ -28,12 +28,13 @@ def call(body) {
     stepExecutor.echo(scm.userRemoteConfigs[0].credentialsId)
     node('master') {
         stage('checkout') {
-            gitCheckout(
+            def d = [
                     type: 'GitSCM',
                     url: scm.userRemoteConfigs[0].url,
                     credentialId: scm.userRemoteConfigs[0].credentialsId,
                     branchName: scm.branches[0].name
-            )
+            ]
+            gitCheckout(d)
         }
         docker.image(config.image).inside {
             stage('build') {
