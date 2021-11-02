@@ -9,12 +9,12 @@ def call(Closure body) {
     body.delegate = config
     body()
     IStepExecutor stepExecutor = new DefaultStepExecutor(this);
-    stepExecutor.echo(config.scm )
+    stepExecutor.echo(config.type )
     stepExecutor.echo(config.url )
     stepExecutor.echo(config.credentialId )
     stepExecutor.echo(config.branchName )
     Checkout checkout = new Checkout(
-            versionClass: config.scm ?: 'GitSCM',
+            versionClass: config.type ?: 'GitSCM',
             url: config.url ?:  scm.userRemoteConfigs[0].url,
             credentialId: config.credentialId ?: scm.userRemoteConfigs[0].credentialsId,
             branchName: config.branchName ?: scm.branches[0].name
