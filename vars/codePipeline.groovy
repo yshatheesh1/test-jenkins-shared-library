@@ -31,7 +31,7 @@ def call(body) {
             Checkout checkout = new Checkout(
                     versionClass: 'GitSCM',
                     url: scm.userRemoteConfigs[0].url,
-                    credentialId: scm.userRemoteConfigs[0].credentialId,
+                    credentialId: scm.userRemoteConfigs[0].credentialsId,
                     branchName:scm.branches[0].name
             )
             new CheckoutHandler(stepExecutor, checkout).gitCheckout();
