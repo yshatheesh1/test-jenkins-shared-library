@@ -3,11 +3,7 @@ import com.bbc.model.Checkout
 import com.bbc.step.DefaultStepExecutor
 import com.bbc.step.IStepExecutor
 
-def call(Closure body) {
-    def config = [:]
-    body.resolveStrategy = Closure.DELEGATE_FIRST
-    body.delegate = config
-    body()
+def call(Map config) {
     IStepExecutor stepExecutor = new DefaultStepExecutor(this);
     stepExecutor.echo(config.type )
     stepExecutor.echo(config.url )

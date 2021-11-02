@@ -28,7 +28,7 @@ def call(body) {
     IStepExecutor stepExecutor = new DefaultStepExecutor(this);
     stepExecutor.node('master', {
         stepExecutor.stage('checkout', {
-            gitCheckout()
+            gitCheckout(config)
         })
         stepExecutor.stage('build', {
             stepExecutor.sh(config.build)
