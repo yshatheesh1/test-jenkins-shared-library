@@ -1,4 +1,5 @@
 import com.bbc.core.CheckoutHandler
+import com.bbc.model.Checkout
 import com.bbc.step.DefaultStepExecutor
 import com.bbc.step.IStepExecutor
 
@@ -12,9 +13,6 @@ import com.bbc.step.IStepExecutor
  *      integrationTest: 'dotnet test --integrationTest'
  *      sonarScan: 'dotnet sonarScan'
  *      nuget: 'dotnet publish'
- *      gitRepo = {
- *
- *      }
  * }
  */
 
@@ -26,15 +24,37 @@ def call(body) {
     // get builder based on build
     //  dockerNode(config.image) {
     IStepExecutor stepExecutor = new DefaultStepExecutor(this);
-    stepExecutor.node('master', {
-        stepExecutor.stage('checkout', {
-            gitCheckout(config)
-        })
-        stepExecutor.stage('build', {
-            stepExecutor.sh(config.build)
-        })
-        stepExecutor.stage('test', {
-            stepExecutor.sh(config.test)
-        })
-    })
+    node('master') {
+        stage('checkout') {
+            gitCheckout(
+                    type: 'GitSCM',
+                    url: scm.userRemoteConfigs[0].url,
+                    credentialId: scm.userRemoteConfigs[0].credentialsId,
+                    branchName: scm.branches[0].name
+            )
+        }
+        docker.image(config.image).inside {
+            stage('build') {
+                stepExecutor.sh(config.build)
+            }
+            stage('test') {
+                stepExecutor.sh(config.test)
+            }
+        }
+//
+//        stage('sonar scan') {
+////            dotnet tool install dotnet-sonarscanner --tools-path ~/tools
+////            ~/tools/dotnet-sonarscanner begin /k:"project-key" /n:"project-name" /d:sonar.host.url="url"
+////            /d:sonar.login="token" /d:sonar.cs.opencover.reportspath="**/coverage.opencover.xml"
+////            /d:sonar.cs.vstest.reportsPath="**/TestResults/*.trx" /d:sonar.exclusions="exclusions"
+////            /d:sonar.pullrequest.branch="branch" /d:sonar.pullrequest.key="pr_number"
+////            dotnet build --configuration release
+////            dotnet test
+////            ~/tools/dotnet-sonarscanner end /d.sonar.login="sonartoken"
+//
+//            // use jacoco maven or jacoco gradle plugin
+//
+//
+//        }
+    }
 }

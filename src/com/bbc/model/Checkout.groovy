@@ -5,5 +5,5 @@ class Checkout {
     String branchName;
     String credentialId;
     String url;
-    int timeout;
+    int timeout = 5
 }
