@@ -24,6 +24,8 @@ def call(body) {
     // get builder based on build
     //  dockerNode(config.image) {
     IStepExecutor stepExecutor = new DefaultStepExecutor(this);
+    stepExecutor.echo(scm.userRemoteConfigs[0].url)
+    stepExecutor.echo(scm.userRemoteConfigs[0].credentialsId)
     node('master') {
         stage('checkout') {
             gitCheckout(
