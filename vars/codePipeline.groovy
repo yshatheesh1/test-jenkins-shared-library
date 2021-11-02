@@ -12,6 +12,9 @@ import com.bbc.step.IStepExecutor
  *      integrationTest: 'dotnet test --integrationTest'
  *      sonarScan: 'dotnet sonarScan'
  *      nuget: 'dotnet publish'
+ *      gitRepo = {
+ *
+ *      }
  * }
  */
 
